@@ -1,0 +1,30 @@
+# ---------- Stage 1: Build ----------
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm ci
+
+# Copy source
+COPY . .
+
+# Build (if using TypeScript / build step)
+# RUN npm run build
+
+# ---------- Stage 2: Runtime ----------
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy only required files from builder
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/. .
+
+
+EXPOSE 3000
+
+CMD ["node", "app.js"]
+

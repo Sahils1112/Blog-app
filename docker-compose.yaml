@@ -37,6 +37,7 @@ services:
 
 networks:
   hybrid:
+    driver: bridge
 
 volumes:
   mongo-data:

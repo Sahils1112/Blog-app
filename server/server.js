@@ -29,4 +29,7 @@ app.use("/api", (req, res, next) => {
 
 //define port
 
-app.listen(5001, () => console.log("app started at 5001..."));
+app.listen(5001, '0.0.0.0', () => {
+  console.log('Backend running on port 5001');
+});
+
